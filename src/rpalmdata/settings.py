@@ -9,10 +9,10 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+import os
 import datetime
 from pathlib import Path
 from decouple import config
-import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,7 +30,7 @@ DEBUG = config("DJANGO_DEBUG", cast=bool, default=False)
 ALLOWED_HOSTS = [
     ".railway.app"
     "127.0.0.1", 
-    "nexusconjure.vercel.app"
+    ".vercel.app"
 ]
 
 if DEBUG:
@@ -40,7 +40,7 @@ CSRF_TRUSTED_ORIGINS = [
     "http://*.railway.app",
     "https://*.railway.app",
     "http://127.0.0.1", 
-    "https://nexusconjure.vercel.app"
+    "https://*.vercel.app"
 ]
 
 # Application definition
@@ -173,6 +173,6 @@ NINJA_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
 }
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "src/static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "src/staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
