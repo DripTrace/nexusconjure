@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 # from django.settings import settings
-from .settings import settings
+# from .settings import settings
 
 from .api import api
 # from .settings import settings
