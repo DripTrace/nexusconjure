@@ -20,7 +20,7 @@
 			"dest": "/src/static/$1"
 		},
 		{
-			"src": "/(.*)",
+			"src": "/src/(.*)",
 			"dest": "src/rpalmdata/wsgi.py"
 		}
 	],

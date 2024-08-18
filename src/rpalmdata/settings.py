@@ -174,5 +174,5 @@ NINJA_JWT = {
 }
 
 STATICFILES_DIRS = [os.path.join(BASE_DIR, "src/static")]
-STATIC_URL = "static/"
+STATIC_URL = "src/static/"
 STATIC_ROOT = os.path.join(BASE_DIR, "src/staticfiles")
