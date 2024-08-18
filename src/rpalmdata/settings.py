@@ -173,6 +173,6 @@ NINJA_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
 }
 
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "src/static")]
 STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATIC_ROOT = os.path.join(BASE_DIR, "src/staticfiles")
