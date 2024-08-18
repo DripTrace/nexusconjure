@@ -101,16 +101,28 @@ WSGI_APPLICATION = "rpalmdata.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
+# psql "postgres://default:SsqhHnIv71zN@ep-winter-violet-a6i64542.us-west-2.aws.neon.tech:5432/verceldb?sslmode=require"
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "rpalm-nexusconjure_db",
+#         #    '‘rpalm_db’'
+#         "USER": "rpalm-nexusconjure_usr",
+#         "PASSWORD": "n3xu$c0njurer",
+#         "HOST": "10.255.254.4",
+#         "PORT": "5432",
+#     }
+# }
 
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "rpalm-nexusconjure_db",
+        "NAME": "verceldb",
         #    '‘rpalm_db’'
-        "USER": "rpalm-nexusconjure_usr",
-        "PASSWORD": "n3xu$c0njurer",
-        "HOST": "10.255.254.4",
+        "USER": "default",
+        "PASSWORD": "SsqhHnIv71zN",
+        "HOST": "ep-winter-violet-a6i64542.us-west-2.aws.neon.tech",
         "PORT": "5432",
     }
 }
