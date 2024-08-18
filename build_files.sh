@@ -1,4 +1,4 @@
 # build_files.sh
 
 pip3 install -r requirements.txt
-python3 manage.py src/collectstatic --noinput
+python3.12 manage.py src/collectstatic --noinput
