@@ -29,18 +29,17 @@ DEBUG = config("DJANGO_DEBUG", cast=bool, default=False)
 ALLOWED_HOSTS = [
     ".railway.app"
     "127.0.0.1", 
-    ".vercel.app"
-
+    "nexusconjure.vercel.app"
 ]
+
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
 
 CSRF_TRUSTED_ORIGINS = [
     "http://*.railway.app",
     "https://*.railway.app",
-    "127.0.0.1", 
-    ".vercel.app"]
-
+    "http://127.0.0.1", 
+    "https://nexusconjure.vercel.app"
 ]
 
 # Application definition
