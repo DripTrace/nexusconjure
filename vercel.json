@@ -7,6 +7,9 @@
 			"config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
 		},
 		{
+			"env": {
+				"DJANGO_SETTINGS_MODULE": "rpalmdata.settings.production"
+			},
 			"src": "build_files.sh",
 			"use": "@vercel/static-build",
 			"config": {
