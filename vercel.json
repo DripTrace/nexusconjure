@@ -10,19 +10,19 @@
 			"src": "build_files.sh",
 			"use": "@vercel/static-build",
 			"config": {
-				"distDir": "staticfiles"
+				"distDir": "src/staticfiles"
 			}
 		}
 	],
 	"routes": [
 		{
-			"src": "/static/(.*)",
-			"dest": "/static/$1"
+			"src": "/src/static/(.*)",
+			"dest": "/src/static/$1"
 		},
 		{
 			"src": "/src/(.*)",
 			"dest": "src/rpalmdata/wsgi.py"
 		}
 	],
-	"outputDirectory": "staticfiles"
+	"outputDirectory": "src/staticfiles"
 }
