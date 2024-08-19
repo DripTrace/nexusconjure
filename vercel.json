@@ -18,7 +18,7 @@
 		},
 		{
 			"src": "/(.*)",
-			"dest": "rpalmdata/wsgi.py"
+			"dest": "src/rpalmdata/wsgi.py"
 		}
 	]
 }
