@@ -6,7 +6,7 @@
 # python3.12 src/manage.py collectstatic --noinput --clear
 
 echo "Installing the latest version of pip..."
-python3.12 -m pip3 install --upgrade pip
+python3.12 -m pip install --upgrade pip
 
 # Build the project
 echo "Building the project..."
