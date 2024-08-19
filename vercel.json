@@ -20,5 +20,6 @@
 			"src": "/(.*)",
 			"dest": "src/rpalmdata/wsgi.py"
 		}
-	]
+	],
+	"outputDirectory": "staticfiles"
 }
