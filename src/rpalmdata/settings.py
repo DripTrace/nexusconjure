@@ -13,6 +13,9 @@ import os
 import datetime
 from pathlib import Path
 from decouple import config
+from dotenv import load_dotenv
+
+load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -69,7 +72,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware"
+    # "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = "rpalmdata.urls"
@@ -98,6 +101,10 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = "rpalmdata.wsgi.application"
+if DEBUG:
+    import mimetypes
+    print('yes added!!!')
+    mimetypes.add_type("application/javascript", ".js", True)
 
 
 # Database
