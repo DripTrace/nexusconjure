@@ -5,6 +5,11 @@
 # python3.12 src/manage.py migrate --noinput
 # python3.12 src/manage.py collectstatic --noinput --clear
 
+# Create a virtual environment
+echo "Creating a virtual environment..."
+python3.12 -m venv venv
+source venv/bin/activate
+
 echo "Installing the latest version of pip..."
 python3.12 -m pip install --upgrade pip
 
