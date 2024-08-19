@@ -5,21 +5,12 @@
 			"src": "src/rpalmdata/wsgi.py",
 			"use": "@vercel/python",
 			"config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
-		},
-		{
-			"src": "build_files.sh",
-			"use": "@vercel/static"
 		}
 	],
 	"routes": [
 		{
-			"src": "/src/staticfiles/(.*)",
-			"dest": "/src/staticfiles/$1"
-		},
-		{
-			"src": "/src/(.*)",
+			"src": "/(.*)",
 			"dest": "src/rpalmdata/wsgi.py"
 		}
-	],
-	"outputDirectory": "src/staticfiles"
+	]
 }
