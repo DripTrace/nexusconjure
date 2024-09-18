@@ -9,32 +9,22 @@ sys.path.append(str(root_path))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rpalmdata.settings")
 
 from django.core.wsgi import get_wsgi_application
+from django.core.handlers.wsgi import WSGIHandler
+from io import BytesIO
 
-def application(environ, start_response):
-    try:
-        django_application = get_wsgi_application()
-        return django_application(environ, start_response)
-    except Exception as e:
-        print(f"Exception in WSGI application: {str(e)}")
-        status = '500 Internal Server Error'
-        response_headers = [('Content-type', 'text/plain')]
-        start_response(status, response_headers)
-        return [b"Internal Server Error"]
+django_application = get_wsgi_application()
 
 def handler(event, context):
-    print("Event:", event)
-    print("Context:", context)
-    
     environ = {
-        'REQUEST_METHOD': event.get('httpMethod', 'GET'),
-        'PATH_INFO': event.get('path', '/'),
+        'REQUEST_METHOD': event['httpMethod'],
+        'PATH_INFO': event['path'],
         'QUERY_STRING': event.get('queryStringParameters', ''),
         'SERVER_NAME': 'vercel',
         'SERVER_PORT': '443',
-        'SERVER_PROTOCOL': 'HTTP/1.1',
+        'HTTP_HOST': event.get('headers', {}).get('host', 'vercel'),
         'wsgi.version': (1, 0),
         'wsgi.url_scheme': 'https',
-        'wsgi.input': event.get('body', ''),
+        'wsgi.input': BytesIO(event.get('body', '').encode('utf-8')),
         'wsgi.errors': sys.stderr,
         'wsgi.multithread': False,
         'wsgi.multiprocess': False,
@@ -43,19 +33,21 @@ def handler(event, context):
 
     # Add headers
     for key, value in event.get('headers', {}).items():
-        environ[f'HTTP_{key.upper().replace("-", "_")}'] = value
+        key = key.upper().replace('-', '_')
+        if key not in ('CONTENT_TYPE', 'CONTENT_LENGTH'):
+            key = f'HTTP_{key}'
+        environ[key] = value
 
-    def start_response(status, headers):
-        nonlocal response
+    response = {}
+    
+    def start_response(status, headers, exc_info=None):
         response['statusCode'] = int(status.split()[0])
         response['headers'] = dict(headers)
 
-    response = {}
-    body = b''.join(application(environ, start_response))
+    body = b''.join(django_application(environ, start_response))
     response['body'] = body.decode('utf-8')
 
-    print("Response:", response)
     return response
 
-# This is the important part for Vercel
-app = application
+# This is important for Vercel
+app = WSGIHandler()
