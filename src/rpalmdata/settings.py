@@ -124,18 +124,6 @@ WSGI_APPLICATION = "rpalmdata.wsgi.app"
 #     }
 # }
 
-# DATABASES = {
-#     "default": {
-#         "ENGINE": "django.db.backends.postgresql",
-#         "NAME": "verceldb",
-#         #    '‘rpalm_db’'
-#         "USER": "default",
-#         "PASSWORD": "SsqhHnIv71zN",
-#         "HOST": "ep-winter-violet-a6i64542.us-west-2.aws.neon.tech",
-#         "PORT": "5432",
-#     }
-# }
-
 # DATABASE_URL = config("DATABASE_URL", cast=str, default="")
 # if DATABASE_URL != "":
 #     import dj_database_url
