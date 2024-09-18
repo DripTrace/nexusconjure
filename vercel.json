@@ -23,5 +23,11 @@
 			"src": "/(.*)",
 			"dest": "src/api/index.py"
 		}
-	]
+	],
+	"functions": {
+		"src/api/index.py": {
+			"memory": 1024,
+			"maxDuration": 10
+		}
+	}
 }
