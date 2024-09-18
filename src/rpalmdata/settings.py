@@ -106,7 +106,7 @@ TEMPLATES = [
 ]
 
 # WSGI_APPLICATION = "rpalmdata.wsgi.application"
-WSGI_APPLICATION = "rpalmdata.wsgi.app"
+WSGI_APPLICATION = "src.rpalmdata.wsgi.app"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
