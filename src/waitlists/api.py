@@ -18,8 +18,6 @@ from .schemas import (
 
 router = Router()
 
-
-
 # /api/waitlists/
 @router.get("", response=List[WaitlistEntryListSchema], auth=helpers.api_auth_user_required)
 def list_wailist_entries(request):
