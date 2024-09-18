@@ -12,6 +12,10 @@
 			"config": {
 				"distDir": "src/staticfiles"
 			}
+		},
+		{
+			"src": "src/api/index.py",
+			"use": "@vercel/python"
 		}
 	],
 	"routes": [
@@ -22,6 +26,10 @@
 		{
 			"src": "/(.*)",
 			"dest": "src/rpalmdata/wsgi.py"
+		},
+		{
+			"src": "/(.*)",
+			"dest": "srcapi/index.py"
 		}
 	]
 }

@@ -35,7 +35,8 @@ DEBUG = config("DJANGO_DEBUG", cast=bool, default=False)
 ALLOWED_HOSTS = [
     ".railway.app"
     "127.0.0.1", 
-    ".vercel.app"
+    ".vercel.app",
+    "nexusconjure.vercel.app"
 ]
 
 if DEBUG:
@@ -48,7 +49,8 @@ CSRF_TRUSTED_ORIGINS = [
     "http://*.railway.app",
     "https://*.railway.app",
     "http://127.0.0.1", 
-    "https://*.vercel.app"
+    "https://*.vercel.app",
+    "https://nexusconjure.vercel.app"
 ]
 
 # Application definition
@@ -66,6 +68,7 @@ INSTALLED_APPS = [
     "ninja_jwt",
     # internal
     "waitlists",
+    # "rpalmdata"
 ]
 
 MIDDLEWARE = [
