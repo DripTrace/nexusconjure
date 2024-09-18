@@ -9,7 +9,6 @@ sys.path.append(str(root_path))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rpalmdata.settings")
 
 from django.core.wsgi import get_wsgi_application
-from werkzeug.wrappers import Request
 
 def application(environ, start_response):
     try:
