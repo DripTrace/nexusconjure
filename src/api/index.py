@@ -9,16 +9,17 @@ sys.path.append(str(root_path))
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rpalmdata.settings")
 
 from django.core.wsgi import get_wsgi_application
-from django.core.handlers.wsgi import WSGIHandler
 from io import BytesIO
 
 django_application = get_wsgi_application()
 
 def handler(event, context):
+    print("Received event:", event)
+    
     environ = {
         'REQUEST_METHOD': event['httpMethod'],
         'PATH_INFO': event['path'],
-        'QUERY_STRING': event.get('queryStringParameters', ''),
+        'QUERY_STRING': event.get('queryStringParameters') or '',
         'SERVER_NAME': 'vercel',
         'SERVER_PORT': '443',
         'HTTP_HOST': event.get('headers', {}).get('host', 'vercel'),
@@ -47,7 +48,8 @@ def handler(event, context):
     body = b''.join(django_application(environ, start_response))
     response['body'] = body.decode('utf-8')
 
+    print("Sending response:", response)
     return response
 
-# This is important for Vercel
-app = WSGIHandler()
+# Vercel specific
+app = handler
