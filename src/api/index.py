@@ -2,24 +2,24 @@ import sys
 import os
 from pathlib import Path
 
-# Print current directory and Python path for debugging
-print("Current working directory:", os.getcwd())
-print("Python path:", sys.path)
-
-# Add the project root to the Python path
-root_path = Path(__file__).resolve().parent.parent
-sys.path.append(str(root_path))
-
-print("Updated Python path:", sys.path)
-
-try:
-    os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rpalmdata.settings")
-    from django.core.wsgi import get_wsgi_application
-    application = get_wsgi_application()
-    print("Django application loaded successfully")
-except ImportError as e:
-    print(f"ImportError: {e}")
-    print("Contents of rpalmdata directory:", os.listdir(root_path / 'rpalmdata'))
-
-# This is the important part for Vercel
-app = application
+def app(event, context):
+    print("Event:", event)
+    print("Context:", context)
+    print("Current working directory:", os.getcwd())
+    print("Directory contents:", os.listdir())
+    print("Python path:", sys.path)
+    
+    root_path = Path(__file__).resolve().parent.parent
+    print("Root path:", root_path)
+    print("Root directory contents:", os.listdir(root_path))
+    
+    rpalmdata_path = root_path / 'rpalmdata'
+    if rpalmdata_path.exists():
+        print("rpalmdata directory contents:", os.listdir(rpalmdata_path))
+    else:
+        print("rpalmdata directory does not exist")
+    
+    return {
+        'statusCode': 200,
+        'body': 'Debug information printed to logs'
+    }
