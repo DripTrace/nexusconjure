@@ -13,12 +13,14 @@ import os
 import datetime
 from pathlib import Path
 from decouple import config
-# from dotenv import load_dotenv
-
-# load_dotenv()
+from dotenv import load_dotenv
+import dj_database_url
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+
+# Load environment variables from .env file
+load_dotenv(BASE_DIR / '.env')
 
 
 # Quick-start development settings - unsuitable for production
@@ -38,6 +40,9 @@ ALLOWED_HOSTS = [
 
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
+    import mimetypes
+    print('yes added!!!')
+    mimetypes.add_type("application/javascript", ".js", True)
 
 CSRF_TRUSTED_ORIGINS = [
     "http://*.railway.app",
@@ -72,7 +77,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    # "whitenoise.middleware.WhiteNoiseMiddleware"
+    "whitenoise.middleware.WhiteNoiseMiddleware"
 ]
 
 ROOT_URLCONF = "rpalmdata.urls"
@@ -100,12 +105,8 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "rpalmdata.wsgi.application"
-if DEBUG:
-    import mimetypes
-    print('yes added!!!')
-    mimetypes.add_type("application/javascript", ".js", True)
-
+# WSGI_APPLICATION = "rpalmdata.wsgi.application"
+WSGI_APPLICATION = "rpalmdata.wsgi.app"
 
 # Database
 # https://docs.djangoproject.com/en/5.0/ref/settings/#databases
@@ -123,27 +124,44 @@ if DEBUG:
 #     }
 # }
 
-DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "verceldb",
-        #    '‘rpalm_db’'
-        "USER": "default",
-        "PASSWORD": "SsqhHnIv71zN",
-        "HOST": "ep-winter-violet-a6i64542.us-west-2.aws.neon.tech",
-        "PORT": "5432",
-    }
-}
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.postgresql",
+#         "NAME": "verceldb",
+#         #    '‘rpalm_db’'
+#         "USER": "default",
+#         "PASSWORD": "SsqhHnIv71zN",
+#         "HOST": "ep-winter-violet-a6i64542.us-west-2.aws.neon.tech",
+#         "PORT": "5432",
+#     }
+# }
 
-DATABASE_URL = config("DATABASE_URL", cast=str, default="")
-if DATABASE_URL != "":
-    import dj_database_url
+# DATABASE_URL = config("DATABASE_URL", cast=str, default="")
+# if DATABASE_URL != "":
+#     import dj_database_url
+#     DATABASES = {
+#         "default": dj_database_url.config(
+#             default=DATABASE_URL,
+#             conn_max_age=300,
+#             conn_health_checks=True
+#         )
+#     }
+
+DATABASE_URL = os.environ.get('DATABASE_URL')
+if DATABASE_URL:
     DATABASES = {
-        "default": dj_database_url.config(
-            default=DATABASE_URL,
-            conn_max_age=300,
-            conn_health_checks=True
-        )
+        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
+    }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': os.environ.get('DATABASE_NAME'),
+            'USER': os.environ.get('DATABASE_USER'),
+            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
+            'HOST': os.environ.get('DATABASE_HOST'),
+            'PORT': os.environ.get('DATABASE_PORT'),
+        }
     }
 
 # Password validation
@@ -193,15 +211,7 @@ NINJA_JWT = {
     'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
 }
 
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "rpalmdata", "static")]
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
-# STATIC_URL = "/static/"
-STATIC_URL = "/static/"
-STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles", "static")
-
-# STATIC_ROOT = os.path.join(BASE_DIR, “staticfiles_build”, “static”)
-# STATIC_URL = “/staticfiles/” 
-# STATICFILES_DIRS = [os.path.join(BASE_DIR, “static”)]
-
-# STATICFILES_STORAGE = "whitenoise.storage.CompressedStaticFilesStorage"
+STATIC_URL = 'static/'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
