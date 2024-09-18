@@ -9,6 +9,7 @@ class WaitlistEntryCreateSchema(Schema):
     # WaitlistEntryIn
     email: EmailStr
 
+
 class ErrorWaitlistEntryCreateSchema(Schema):
     # Create -> Data
     # WaitlistEntryIn

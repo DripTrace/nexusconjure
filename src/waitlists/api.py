@@ -9,30 +9,32 @@ from ninja_jwt.authentication import JWTAuth
 from .forms import WaitlistEntryCreateForm
 from .models import WaitlistEntry
 from .schemas import (
-    WaitlistEntryCreateSchema, 
-    WaitlistEntryListSchema, 
+    WaitlistEntryCreateSchema,
+    WaitlistEntryListSchema,
     WaitlistEntryDetailSchema,
     ErrorWaitlistEntryCreateSchema,
-    WaitlistEntryUpdateSchema
+    WaitlistEntryUpdateSchema,
 )
 
 router = Router()
 
+
 # /api/waitlists/
-@router.get("", response=List[WaitlistEntryListSchema], auth=helpers.api_auth_user_required)
+@router.get(
+    "", response=List[WaitlistEntryListSchema], auth=helpers.api_auth_user_required
+)
 def list_wailist_entries(request):
     qs = WaitlistEntry.objects.filter(user=request.user)
     return qs
 
+
 # /api/waitlists/
-@router.post("", 
-    response={
-        201: WaitlistEntryDetailSchema,
-        400: ErrorWaitlistEntryCreateSchema
-    },
-    auth=helpers.api_auth_user_or_annon
-    )
-def create_waitlist_entry(request, data:WaitlistEntryCreateSchema): 
+@router.post(
+    "",
+    response={201: WaitlistEntryDetailSchema, 400: ErrorWaitlistEntryCreateSchema},
+    auth=helpers.api_auth_user_or_annon,
+)
+def create_waitlist_entry(request, data: WaitlistEntryCreateSchema):
     form = WaitlistEntryCreateForm(data.dict())
     if not form.is_valid():
         # cleaned_data = form.cleaned_data
@@ -47,35 +49,37 @@ def create_waitlist_entry(request, data:WaitlistEntryCreateSchema):
     return 201, obj
 
 
-@router.get("{entry_id}/", response=WaitlistEntryDetailSchema, auth=helpers.api_auth_user_required)
-def get_wailist_entry(request, entry_id:int):
-    obj = get_object_or_404(
-        WaitlistEntry, 
-        id=entry_id,
-        user=request.user)
+@router.get(
+    "{entry_id}/",
+    response=WaitlistEntryDetailSchema,
+    auth=helpers.api_auth_user_required,
+)
+def get_wailist_entry(request, entry_id: int):
+    obj = get_object_or_404(WaitlistEntry, id=entry_id, user=request.user)
     return obj
 
-@router.put("{entry_id}/", response=WaitlistEntryDetailSchema, auth=helpers.api_auth_user_required)
-def update_wailist_entry(request, 
-    entry_id:int, 
-    payload:WaitlistEntryUpdateSchema
-    ):
-    obj = get_object_or_404(
-        WaitlistEntry, 
-        id=entry_id,
-        user=request.user)
+
+@router.put(
+    "{entry_id}/",
+    response=WaitlistEntryDetailSchema,
+    auth=helpers.api_auth_user_required,
+)
+def update_wailist_entry(request, entry_id: int, payload: WaitlistEntryUpdateSchema):
+    obj = get_object_or_404(WaitlistEntry, id=entry_id, user=request.user)
     payload_dict = payload.dict()
-    for k,v in payload_dict.items():
+    for k, v in payload_dict.items():
         setattr(obj, k, v)
     obj.save()
     return obj
 
+
 # http DELETE
-@router.delete("{entry_id}/delete/", response=WaitlistEntryDetailSchema, auth=helpers.api_auth_user_required)
-def delete_wailist_entry(request, entry_id:int):
-    obj = get_object_or_404(
-        WaitlistEntry, 
-        id=entry_id,
-        user=request.user)
+@router.delete(
+    "{entry_id}/delete/",
+    response=WaitlistEntryDetailSchema,
+    auth=helpers.api_auth_user_required,
+)
+def delete_wailist_entry(request, entry_id: int):
+    obj = get_object_or_404(WaitlistEntry, id=entry_id, user=request.user)
     obj.delete()
     return obj

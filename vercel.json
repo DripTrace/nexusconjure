@@ -4,24 +4,16 @@
 		{
 			"src": "build_files.sh",
 			"use": "@vercel/static-build",
-			"config": {
-				"distDir": "src/staticfiles"
-			}
+			"config": { "distDir": "src/staticfiles" }
 		},
 		{
-			"src": "src/api/index.py",
+			"src": "src/api/vercel_handler.py",
 			"use": "@vercel/python",
 			"config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
 		}
 	],
 	"routes": [
-		{
-			"src": "static/(.*)",
-			"dest": "static/$1"
-		},
-		{
-			"src": "/(.*)",
-			"dest": "src/api/vercel_handler.py"
-		}
+		{ "src": "static/(.*)", "dest": "static/$1" },
+		{ "src": "/(.*)", "dest": "src/api/vercel_handler.py" }
 	]
 }

@@ -44,10 +44,7 @@ from django.conf.urls.static import static
 
 from .api import api
 
-urlpatterns = [
-    path("admin/", admin.site.urls),
-    path("api/", api.urls)
-]
+urlpatterns = [path("admin/", admin.site.urls), path("api/", api.urls)]
 
 if settings.DEBUG:
     urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

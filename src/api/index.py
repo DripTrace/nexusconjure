@@ -13,43 +13,45 @@ from io import BytesIO
 
 django_application = get_wsgi_application()
 
+
 def handler(event, context):
     print("Received event:", event)
-    
+
     environ = {
-        'REQUEST_METHOD': event['httpMethod'],
-        'PATH_INFO': event['path'],
-        'QUERY_STRING': event.get('queryStringParameters') or '',
-        'SERVER_NAME': 'vercel',
-        'SERVER_PORT': '443',
-        'HTTP_HOST': event.get('headers', {}).get('host', 'vercel'),
-        'wsgi.version': (1, 0),
-        'wsgi.url_scheme': 'https',
-        'wsgi.input': BytesIO(event.get('body', '').encode('utf-8')),
-        'wsgi.errors': sys.stderr,
-        'wsgi.multithread': False,
-        'wsgi.multiprocess': False,
-        'wsgi.run_once': False,
+        "REQUEST_METHOD": event["httpMethod"],
+        "PATH_INFO": event["path"],
+        "QUERY_STRING": event.get("queryStringParameters") or "",
+        "SERVER_NAME": "vercel",
+        "SERVER_PORT": "443",
+        "HTTP_HOST": event.get("headers", {}).get("host", "vercel"),
+        "wsgi.version": (1, 0),
+        "wsgi.url_scheme": "https",
+        "wsgi.input": BytesIO(event.get("body", "").encode("utf-8")),
+        "wsgi.errors": sys.stderr,
+        "wsgi.multithread": False,
+        "wsgi.multiprocess": False,
+        "wsgi.run_once": False,
     }
 
     # Add headers
-    for key, value in event.get('headers', {}).items():
-        key = key.upper().replace('-', '_')
-        if key not in ('CONTENT_TYPE', 'CONTENT_LENGTH'):
-            key = f'HTTP_{key}'
+    for key, value in event.get("headers", {}).items():
+        key = key.upper().replace("-", "_")
+        if key not in ("CONTENT_TYPE", "CONTENT_LENGTH"):
+            key = f"HTTP_{key}"
         environ[key] = value
 
     response = {}
-    
-    def start_response(status, headers, exc_info=None):
-        response['statusCode'] = int(status.split()[0])
-        response['headers'] = dict(headers)
 
-    body = b''.join(django_application(environ, start_response))
-    response['body'] = body.decode('utf-8')
+    def start_response(status, headers, exc_info=None):
+        response["statusCode"] = int(status.split()[0])
+        response["headers"] = dict(headers)
+
+    body = b"".join(django_application(environ, start_response))
+    response["body"] = body.decode("utf-8")
 
     print("Sending response:", response)
     return response
+
 
 # Vercel specific
 app = handler

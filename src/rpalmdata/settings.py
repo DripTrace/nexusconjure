@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/5.0/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.0/ref/settings/
 """
+
 import os
 import datetime
 from pathlib import Path
@@ -20,7 +21,7 @@ import dj_database_url
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # Load environment variables from .env file
-load_dotenv(BASE_DIR / '.env')
+load_dotenv(BASE_DIR / ".env")
 
 
 # Quick-start development settings - unsuitable for production
@@ -32,25 +33,21 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DJANGO_DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = [
-    ".railway.app"
-    "127.0.0.1", 
-    ".vercel.app",
-    "nexusconjure.vercel.app"
-]
+ALLOWED_HOSTS = [".railway.app" "127.0.0.1", ".vercel.app", "nexusconjure.vercel.app"]
 
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
     import mimetypes
-    print('yes added!!!')
+
+    print("yes added!!!")
     mimetypes.add_type("application/javascript", ".js", True)
 
 CSRF_TRUSTED_ORIGINS = [
     "http://*.railway.app",
     "https://*.railway.app",
-    "http://127.0.0.1", 
+    "http://127.0.0.1",
     "https://*.vercel.app",
-    "https://nexusconjure.vercel.app"
+    "https://nexusconjure.vercel.app",
 ]
 
 # Application definition
@@ -80,7 +77,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
-    "whitenoise.middleware.WhiteNoiseMiddleware"
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "rpalmdata.urls"
@@ -138,20 +135,20 @@ WSGI_APPLICATION = "rpalmdata.wsgi.app"
 #         )
 #     }
 
-DATABASE_URL = os.environ.get('DATABASE_URL')
+DATABASE_URL = os.environ.get("DATABASE_URL")
 if DATABASE_URL:
     DATABASES = {
-        'default': dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
+        "default": dj_database_url.config(default=DATABASE_URL, conn_max_age=600)
     }
 else:
     DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.postgresql',
-            'NAME': os.environ.get('DATABASE_NAME'),
-            'USER': os.environ.get('DATABASE_USER'),
-            'PASSWORD': os.environ.get('DATABASE_PASSWORD'),
-            'HOST': os.environ.get('DATABASE_HOST'),
-            'PORT': os.environ.get('DATABASE_PORT'),
+        "default": {
+            "ENGINE": "django.db.backends.postgresql",
+            "NAME": os.environ.get("DATABASE_NAME"),
+            "USER": os.environ.get("DATABASE_USER"),
+            "PASSWORD": os.environ.get("DATABASE_PASSWORD"),
+            "HOST": os.environ.get("DATABASE_HOST"),
+            "PORT": os.environ.get("DATABASE_PORT"),
         }
     }
 
@@ -198,11 +195,11 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 
 NINJA_JWT = {
-    'ACCESS_TOKEN_LIFETIME': datetime.timedelta(minutes=60),
-    'REFRESH_TOKEN_LIFETIME': datetime.timedelta(days=7),
+    "ACCESS_TOKEN_LIFETIME": datetime.timedelta(minutes=60),
+    "REFRESH_TOKEN_LIFETIME": datetime.timedelta(days=7),
 }
 
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_URL = "static/"
+STATIC_ROOT = os.path.join(BASE_DIR, "staticfiles")
+STATICFILES_DIRS = [os.path.join(BASE_DIR, "static")]
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
