@@ -7,13 +7,13 @@
 			"config": { "distDir": "src/staticfiles" }
 		},
 		{
-			"src": "src/api/vercel_handler.py",
+			"src": "src/rpalmdata/wsgi.py",
 			"use": "@vercel/python",
 			"config": { "maxLambdaSize": "15mb", "runtime": "python3.12" }
 		}
 	],
 	"routes": [
 		{ "src": "static/(.*)", "dest": "static/$1" },
-		{ "src": "/(.*)", "dest": "src/api/vercel_handler.py" }
+		{ "src": "/(.*)", "dest": "src/rpalmdata/wsgi.py" }
 	]
 }
