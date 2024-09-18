@@ -29,7 +29,7 @@
 		},
 		{
 			"src": "/(.*)",
-			"dest": "srcapi/index.py"
+			"dest": "src/api/index.py"
 		}
 	]
 }
