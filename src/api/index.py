@@ -25,3 +25,6 @@ application = VercelHandler()
 
 def handler(event, context):
     return application(event, context)
+
+# This is the important part for Vercel
+app = application
