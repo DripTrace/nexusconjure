@@ -12,7 +12,7 @@ import os
 from django.core.wsgi import get_wsgi_application
 
 
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "src.rpalmdata.settings")
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "rpalmdata.settings")
 
 app = get_wsgi_application()
 
