@@ -1,6 +1,7 @@
 from typing import List
 import json
 from django.shortcuts import get_object_or_404
+from django.core import serializers
 from ninja import Router
 
 import helpers
@@ -23,9 +24,12 @@ router = Router()
 @router.get(
     "", response=List[WaitlistEntryListSchema], auth=helpers.api_auth_user_required
 )
-def list_wailist_entries(request):
+def list_waitlist_entries(request):
     qs = WaitlistEntry.objects.filter(user=request.user)
-    return qs
+    print(f"User: {request.user}")
+    print(f"Queryset count: {qs.count()}")
+    print(f"Queryset: {serializers.serialize('json', qs)}")
+    return list(qs)  # Ensure we're returning a list, even if it's empty
 
 
 # /api/waitlists/

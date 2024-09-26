@@ -33,7 +33,7 @@ SECRET_KEY = config("DJANGO_SECRET_KEY", cast=str)
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = config("DJANGO_DEBUG", cast=bool, default=False)
 
-ALLOWED_HOSTS = [".railway.app" "127.0.0.1", ".vercel.app", "nexusconjure.vercel.app"]
+ALLOWED_HOSTS = [".railway.app" "127.0.0.1", ".vercel.app", "nexusconjure.vercel.app", "nexusconjure.com"]
 
 if DEBUG:
     ALLOWED_HOSTS = ["*"]
